@@ -1,0 +1,19 @@
+import pytest
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
+from pages.sandbox_page import SandboxPage
+
+
+@pytest.fixture(scope="session")
+def browser():
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service)
+    yield driver
+    driver.quit()
+
+
+@pytest.fixtureim
+def sandbox_page(browser):
+    return SandboxPage(browser)
+
